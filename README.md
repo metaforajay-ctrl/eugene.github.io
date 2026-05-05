@@ -4,7 +4,7 @@
 
 ---
 
-## 🌐 [ОФИЦИАЛЬНЫЙ САЙТ](metaforajay-ctrl.github.io/eugene/)
+## 🌐 [ОФИЦИАЛЬНЫЙ САЙТ](htpps://metaforajay-ctrl.github.io/eugene/)
  
 ---
 
