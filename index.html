@@ -3,37 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Black Legion Studios | Advanced Cyber-Core</title>
+    <title>Black Legion | Site</title>
     <style>
-        :root { --main-red: #ff0000; --bg-dark: #050505; --card-bg: #0f0f0f; }
-        
+        :root { --red: #ff0000; --bg: #050505; --card-bg: rgba(15, 15, 15, 0.95); }
+
         body {
-            background-color: var(--bg-dark);
-            color: #ccc;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0; padding: 0;
-            display: flex; flex-direction: column; align-items: center;
-            overflow-x: hidden;
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at center, #1a0505 0%, #050505 100%);
         }
 
-        /* Header Area */
-        header { padding: 80px 20px; text-align: center; }
-        .logo { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; letter-spacing: 10px; color: #fff; text-transform: uppercase; }
-        .red-l { color: var(--main-red); text-decoration: underline; text-shadow: 0 0 20px var(--main-red); }
-        .glitch-text { font-size: 0.9rem; color: #444; margin-top: 10px; letter-spacing: 3px; }
+        .header-box { padding: 60px 20px; text-align: center; }
+        .logo { font-size: 3.5rem; font-weight: 900; letter-spacing: 12px; text-transform: uppercase; margin: 0; }
+        .red-l { color: var(--red); text-shadow: 0 0 25px var(--red); text-decoration: underline; }
 
-        /* Dossier Section */
-        .section-header { width: 100%; max-width: 900px; padding: 20px; border-bottom: 1px solid #222; margin-bottom: 40px; font-weight: bold; color: var(--main-red); }
-        
-        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 90%; max-width: 1200px; margin-bottom: 100px; }
-        
-        .card {
-            background: var(--card-bg);
-            border: 1px solid #1a1a1a;
+        .container {
+            display: flex;
+            gap: 40px;
             padding: 40px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
+            flex-wrap: wrap;
+            justify-content: center;
         }
+
+        /* КАРТОЧКИ УЛЬТРА-КЛАССА */
+        .elite-card {
+            width: 350px;
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 15px;
+            padding: 35px;
+            position: relative;
+            transition: 0.4s ease;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .elite-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--red);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
+        }
+
+        .elite-card::before {
+            content: ""; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,0,0,0.05), transparent);
+            transform: rotate(45deg); transition: 0.8s;
+        }
+        .elite-card:hover::before { left: 100%; }
+
+        .rank-tag {
+            background: var(--red); color: #000;
+            font-size: 0.7rem; font-weight: 900;
+            padding: 4px 12px; border-radius: 4px;
+            position: absolute; top: 20px; right: 20px;
+        }
+
+        .name { font-size: 2rem; margin: 15px 0 5px 0; font-weight: 800; }
+        .role { color: var(--red); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 25px; display: block; }
+
+        /* СКИНЫ ПРОГРЕССА */
+        .skill-row { margin-bottom: 18px; }
+        .skill-label { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 6px; color: #777; }
+        .bar-bg { width: 100%; height: 4px; background: #1a1a1a; border-radius: 2px; }
+        .bar-fill { height: 100%; background: var(--red); box-shadow: 0 0 10px var(--red); border-radius: 2px; }
+
+        .desc { font-size: 0.9rem; color: #999; line-height: 1.6; margin-top: 25px; }
+
+        footer { margin-top: auto; padding: 40px; color: #333; font-size: 0.8rem; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-box">
+        <h1 class="logo">Bʟack <span class="red-l">L</span>egion</h1>
+    </div>
+
+    <div class="container">
+        <!-- КАРТОЧКА ЕВГЕНИЯ -->
+        <div class="elite-card">
+            <div class="rank-tag">SSS_LEADER</div>
+            <div class="name">Евгений Ш.</div>
+            <span class="role">Chief Executive Architect</span>
+            
+            <div class="skill-row">
+                <div class="skill-label"><span>VIBECODING</span><span>100%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 100%;"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-label"><span>ALL_LANGUAGES</span><span>99%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 99%;"></div></div>
+            </div>
+
+            <p class="desc">Основатель Легиона. Обладает абсолютным пониманием кода. Использует нейро-синхронизацию для ускорения разработки в 10 раз.</p>
+        </div>
+
+        <!-- КАРТОЧКА ДМИТРИЯ -->
+        <div class="elite-card">
+            <div class="rank-tag">S_MASTER</div>
+            <div class="name">Дмитрий Ш.</div>
+            <span class="role">Lead Logic Engineer</span>
+            
+            <div class="skill-row">
+                <div class="skill-label"><span>SYSTEM_LOGIC</span><span>98%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 98%;"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-label"><span>CYBER_SECURITY</span><span>95%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 95%;"></div></div>
+            </div>
+
+            <p class="desc">Главный инженер логики. Дмитрий Александрович контролирует стабильность ядра системы и защищает данные от внешних угроз.</p>
+        </div>
+    </div>
+
+    <footer>
+        EUGENE // dminZ // GITHUB // 2024
+    </footer>
+
+</body>
+</html>
         .card:hover { transform: scale(1.03); border-color: var(--main-red); box-shadow: 0 0 30px rgba(255, 0, 0, 0.15); }
         .card h2 { color: #fff; margin: 0 0 15px 0; font-size: 1.8rem; }
         .card .role { color: var(--main-red); font-size: 0.75rem; letter-spacing: 2px; display: block; margin-bottom: 20px; border-left: 2px solid var(--main-red); padding-left: 10px; }
