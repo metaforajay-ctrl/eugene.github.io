@@ -5,135 +5,160 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Black Legion | Site</title>
     <style>
-        :root { --red: #ff0000; --dark: #050505; --card: #111; }
+        :root { --r: #ff0000; --b: #000; --w: #fff; --glass: rgba(15, 15, 15, 0.9); }
         
         body {
-            background: var(--dark); color: #fff;
-            font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0;
+            background: var(--b); color: var(--w);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0; padding: 0; overflow-x: hidden;
             scroll-behavior: smooth;
+        }
+
+        /* Анимированный фон */
+        .bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #200000 0%, #000 100%);
+            z-index: -1;
         }
 
         /* Навигация */
         nav {
-            position: fixed; top: 0; width: 100%; background: rgba(0,0,0,0.9);
-            border-bottom: 1px solid var(--red); z-index: 1000;
-            display: flex; justify-content: center; padding: 15px 0;
+            position: fixed; top: 0; width: 100%; background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px); border-bottom: 1px solid #300;
+            z-index: 1000; display: flex; justify-content: center; padding: 20px 0;
         }
         nav a {
-            color: #fff; text-decoration: none; margin: 0 20px;
-            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;
-            transition: 0.3s;
+            color: #888; text-decoration: none; margin: 0 25px;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px;
+            transition: 0.3s; font-weight: bold;
         }
-        nav a:hover { color: var(--red); text-shadow: 0 0 10px var(--red); }
+        nav a:hover { color: var(--r); text-shadow: 0 0 10px var(--r); }
 
-        /* Шапка */
+        /* Главный экран */
         header {
-            height: 60vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            background: radial-gradient(circle, #200 0%, #050505 100%);
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
         }
-        .logo { font-size: 4rem; font-weight: 900; letter-spacing: 15px; margin: 0; }
-        .red-l { color: var(--red); text-shadow: 0 0 20px var(--red); }
+        .logo { 
+            font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; 
+            letter-spacing: 20px; margin: 0; text-transform: uppercase;
+        }
+        .red-l { color: var(--r); text-shadow: 0 0 30px var(--r); position: relative; }
+        .red-l::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; background: var(--r); }
 
         /* Секции */
-        section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
-        h2 { border-left: 5px solid var(--red); padding-left: 15px; text-transform: uppercase; margin-bottom: 50px; }
-
-        /* Сетка игр */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .item-card {
-            background: var(--card); border: 1px solid #222; padding: 30px;
-            transition: 0.3s; position: relative;
+        section { padding: 150px 20px; max-width: 1300px; margin: 0 auto; }
+        h2 { 
+            font-size: 2.5rem; text-transform: uppercase; letter-spacing: 5px;
+            margin-bottom: 60px; border-left: 8px solid var(--r); padding-left: 20px;
         }
-        .item-card:hover { border-color: var(--red); transform: translateY(-10px); }
-        .price { color: var(--red); font-weight: bold; display: block; margin-top: 15px; }
 
-        /* Кнопка купить */
-        .buy-btn {
-            display: inline-block; margin-top: 20px; padding: 10px 20px;
-            border: 1px solid var(--red); color: var(--red); text-decoration: none;
-            font-size: 0.8rem; transition: 0.3s;
+        /* Сетка */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+        
+        .card {
+            background: var(--glass); border: 1px solid #222; border-radius: 20px;
+            padding: 40px; transition: 0.5s; position: relative; overflow: hidden;
         }
-        .buy-btn:hover { background: var(--red); color: #000; }
+        .card:hover {
+            border-color: var(--r); transform: translateY(-20px);
+            box-shadow: 0 20px 50px rgba(255, 0, 0, 0.2);
+        }
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,0,0,0.05), transparent);
+            transform: translateX(-100%); transition: 0.6s;
+        }
+        .card:hover::before { transform: translateX(100%); }
 
-        footer { text-align: center; padding: 50px; border-top: 1px solid #222; color: #444; }
+        .price { font-size: 1.5rem; color: var(--r); font-weight: 900; margin: 20px 0; display: block; }
+        
+        .btn {
+            display: inline-block; padding: 15px 35px; border: 1px solid var(--r);
+            color: var(--r); text-decoration: none; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;
+            border-radius: 5px;
+        }
+        .btn:hover { background: var(--r); color: #000; box-shadow: 0 0 30px var(--r); }
+
+        /* Футер */
+        footer { padding: 100px 20px; text-align: center; border-top: 1px solid #111; color: #333; letter-spacing: 10px; }
     </style>
 </head>
 <body>
 
+    <div class="bg"></div>
+
     <nav>
-        <a href="#home">Главная</a>
-        <a href="#games">Игры</a>
-        <a href="#services">Услуги</a>
-        <a href="#about">О нас</a>
+        <a href="#home">Mainframe</a>
+        <a href="#games">Projects</a>
+        <a href="#store">Store</a>
+        <a href="#dossier">Dossier</a>
     </nav>
 
     <header id="home">
         <h1 class="logo">Bʟack <span class="red-l">L</span>egion</h1>
-        <p style="color: #666; letter-spacing: 5px;">FUTURE IS CODED HERE</p>
+        <p style="color: #555; margin-top: 20px; letter-spacing: 8px;">GLOBAL SYSTEM INTERFACE</p>
     </header>
 
     <section id="games">
         <h2>Планируемые игры</h2>
         <div class="grid">
-            <div class="item-card">
-                <h3>Vibe Runner</h3>
-                <p>Бесконечный неоновый раннер, где музыка меняет уровень сложности в реальном времени.</p>
-                <span class="price">Статус: В РАЗРАБОТКЕ</span>
+            <div class="card">
+                <div style="color:var(--r); font-size: 0.7rem; margin-bottom: 10px;">[ CODENAME: RUNNER ]</div>
+                <h3>Vibe Runner 2077</h3>
+                <p>Неоновый мир, созданный вайбкодингом. Музыка синхронизируется с пульсом игрока.</p>
+                <span class="price">STABLE PHASE</span>
             </div>
-            <div class="item-card">
-                <h3>Legion Security</h3>
-                <p>Симулятор хакера от лица Дмитрия Шуклина. Взломай всё, что видишь.</p>
-                <span class="price">Статус: КОНЦЕПТ</span>
-            </div>
-            <div class="item-card">
-                <h3>Eugene's Quest</h3>
-                <p>RPG про мультиязычного кодера, который спасает интернет от багов.</p>
-                <span class="price">Статус: ПЛАНИРУЕТСЯ</span>
+            <div class="card">
+                <div style="color:var(--r); font-size: 0.7rem; margin-bottom: 10px;">[ CODENAME: HACK ]</div>
+                <h3>Dmitry's Logic</h3>
+                <p>Хоррор-головоломка. Тебе нужно починить код, пока за тобой охотится баг-монстр.</p>
+                <span class="price">IN DEVELOPMENT</span>
             </div>
         </div>
     </section>
 
-    <section id="services">
-        <h2>Услуги и Магазин</h2>
+    <section id="store">
+        <h2>Элитный Магазин</h2>
         <div class="grid">
-            <div class="item-card">
-                <h3>Продажа Доменов</h3>
-                <p>Регистрируем элитные домены для твоих проектов. Пожизненная поддержка.</p>
-                <span class="price">От 990₽ / год</span>
-                <a href="#" class="buy-btn">КУПИТЬ</a>
+            <div class="card">
+                <h3>Домены .LEGION</h3>
+                <p>Уникальные имена для твоих сайтов. Полная защита от взлома силами Дмитрия.</p>
+                <span class="price">990₽ / год</span>
+                <a href="#" class="btn">Взять</a>
             </div>
-            <div class="item-card">
-                <h3>Мерч: Игрушки</h3>
-                <p>Лимитированная фигурка "Black Legion Coder". Высокое качество.</p>
-                <span class="price">2500₽</span>
-                <a href="#" class="buy-btn">ЗАКАЗАТЬ</a>
+            <div class="card">
+                <h3>Коллекционные фигурки</h3>
+                <p>Лимитированная серия: Евгений в кресле лидера Black Legion. 1:10 масштаб.</p>
+                <span class="price">4 500₽</span>
+                <a href="#" class="btn">Заказать</a>
             </div>
-            <div class="item-card">
-                <h3>Vibecoding Консультация</h3>
-                <p>Евгений лично научит тебя кодить на всех языках за неделю.</p>
-                <span class="price">5000₽ / час</span>
-                <a href="#" class="buy-btn">ЗАПИСАТЬСЯ</a>
+            <div class="card">
+                <h3>Личный Игрушечный Legion</h3>
+                <p>Набор роботов-помощников для начинающих программистов.</p>
+                <span class="price">12 000₽</span>
+                <a href="#" class="btn">В корзину</a>
             </div>
         </div>
     </section>
 
-    <section id="about">
-        <h2>О нас</h2>
+    <section id="dossier">
+        <h2>Dossier: Founders</h2>
         <div class="grid">
-            <div class="item-card">
-                <h3>Евгений Шалгуев</h3>
-                <p>Основатель, гений, мультиязычный кодер. Создает миры из чистого вайба.</p>
+            <div class="card">
+                <h3>Eugene S.</h3>
+                <p>Chief Executive. Основатель. Обладает уровнем доступа "God Mode". Создает сайты за секунды.</p>
             </div>
-            <div class="item-card">
-                <h3>Дмитрий Шуклин</h3>
-                <p>Технический директор. Мастер логики и главный по безопасности Легиона.</p>
+            <div class="card">
+                <h3>Dmitry S.</h3>
+                <p>Lead Engineer. Хранитель логики. Обеспечивает стабильность всех серверов Легиона.</p>
             </div>
         </div>
     </section>
 
     <footer>
-        BLACK LEGION STUDIOS // 2024 // EUGENE & dminZ
+        BLACK LEGION STUDIOS // 2026
     </footer>
 
 </body>
