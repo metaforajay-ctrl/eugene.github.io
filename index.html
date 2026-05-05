@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Legion Studios | Advanced Cyber-Core</title>
+    <style>
+        :root { --main-red: #ff0000; --bg-dark: #050505; --card-bg: #0f0f0f; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: #ccc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Header Area */
+        header { padding: 80px 20px; text-align: center; }
+        .logo { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; letter-spacing: 10px; color: #fff; text-transform: uppercase; }
+        .red-l { color: var(--main-red); text-decoration: underline; text-shadow: 0 0 20px var(--main-red); }
+        .glitch-text { font-size: 0.9rem; color: #444; margin-top: 10px; letter-spacing: 3px; }
+
+        /* Dossier Section */
+        .section-header { width: 100%; max-width: 900px; padding: 20px; border-bottom: 1px solid #222; margin-bottom: 40px; font-weight: bold; color: var(--main-red); }
+        
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 90%; max-width: 1200px; margin-bottom: 100px; }
+        
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #1a1a1a;
+            padding: 40px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        .card:hover { transform: scale(1.03); border-color: var(--main-red); box-shadow: 0 0 30px rgba(255, 0, 0, 0.15); }
+        .card h2 { color: #fff; margin: 0 0 15px 0; font-size: 1.8rem; }
+        .card .role { color: var(--main-red); font-size: 0.75rem; letter-spacing: 2px; display: block; margin-bottom: 20px; border-left: 2px solid var(--main-red); padding-left: 10px; }
+        .card p { line-height: 1.8; color: #888; font-size: 0.95rem; }
+
+        /* Review Slider */
+        .slider-container {
+            width: 100%; max-width: 800px;
+            position: relative;
+            background: #0a0a0a;
+            border: 1px dashed #333;
+            padding: 60px 40px;
+            margin-bottom: 100px;
+            text-align: center;
+            min-height: 200px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .review-content { display: none; animation: fadeIn 0.5s; }
+        .review-content.active { display: block; }
+        .review-text { font-size: 1.2rem; font-style: italic; color: #eee; margin-bottom: 20px; }
+        .review-author { color: var(--main-red); font-weight: bold; font-family: monospace; }
+        
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: none; border: 1px solid #333; color: #fff;
+            padding: 15px; cursor: pointer; transition: 0.3s; font-family: monospace;
+        }
+        .nav-btn:hover { background: var(--main-red); border-color: var(--main-red); }
+        .prev-btn { left: -20px; }
+        .next-btn { right: -20px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        footer { padding: 50px; text-align: center; border-top: 1px solid #111; width: 100%; color: #333; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Bʟack <span class="red-l">L</span>egion</div>
+    <div class="glitch-text">DEVELOPMENT_PHASE_04 // MULTI_LANGUAGE_ENVIRONMENT</div>
+</header>
+
+<div class="section-header">01 // CORE_DOSSIER</div>
+<div class="team-grid">
+    <div class="card">
+        <span class="role">CHIEF EXECUTIVE ARCHITECT</span>
+        <h2>Евгений Шалгуев</h2>
+        <p>Верховный разработчик и основатель Black Legion. Владеет искусством написания кода на всех известных языках, от ассемблера до современных нейросетевых структур. Специализируется на "Вайбкодинге" — методике, при которой производительность возрастает на 500%. Создатель архитектуры мини-игр нового поколения.</p>
+    </div>
+    <div class="card">
+        <span class="role">SYSTEM_OPERATIONS_DIRECTOR</span>
+        <h2>Дмитрий Шуклин</h2>
+        <p>Сооснователь и главный по логическим цепям. Дмитрий Александрович обеспечивает стабильность ядра Black Legion. Эксперт по сложным алгоритмам и кибербезопасности. Если в игре идеально работает физика или сетевой код — это работа его рук. Следит за тем, чтобы каждый проект студии был технически безупречен.</p>
+    </div>
+</div>
+
+<div class="section-header">02 // FEEDBACK_LOOP (Кликай на стрелки)</div>
+<div class="slider-container">
+    <button class="nav-btn prev-btn" onclick="changeReview(-1)"> [ < ] </button>
+    
+    <div class="review-content active">
+        <div class="review-text">"Механика их мини-игр ощущается лучше, чем в крупных шутерах. Это уровень!"</div>
+        <div class="review-author">@GamerVibe_99</div>
+    </div>
+    <div class="review-content">
+        <div class="review-text">"Евгений — это Илон Маск от мира геймдева, только в 11 лет."</div>
+        <div class="review-author">@TechScout_Weekly</div>
+    </div>
+    <div class="review-content">
+        <div class="review-text">"Логика Дмитрия в коде просто непробиваема. Чистый профессионализм."</div>
+        <div class="review-author">@System_Admin_X</div>
+    </div>
+    <div class="review-content">
+        <div class="review-text">"Вайбкодинг — это будущее. Скорость разработки в этой студии поражает."</div>
+        <div class="review-author">@IndieDev_Community</div>
+    </div>
+    <div class="review-content">
+        <div class="review-text">"Лучшие мини-игры на GitHub за последний год. Однозначно рекомендую."</div>
+        <div class="review-author">@OpenSource_Warrior</div>
+    </div>
+    <div class="review-content">
+        <div class="review-text">"Дизайн сайта и подход к делу говорят сами за себя. Это Black Legion!"</div>
+        <div class="review-author">@Cyber_Reviewer</div>
+    </div>
+
+    <button class="nav-btn next-btn" onclick="changeReview(1)"> [ > ] </button>
+</div>
+
+<footer>
+    <p>Copyright © 2024 Eugene, dminZ, Github</p>
+    <p>BLS_SYSTEM_v4.0.2_STABLE</p>
+</footer>
+
+<script>
+    let currentReview = 0;
+    const reviews = document.querySelectorAll('.review-content');
+
+    function changeReview(direction) {
+        reviews[currentReview].classList.remove('active');
+        currentReview = (currentReview + direction + reviews.length) % reviews.length;
+        reviews[currentReview].classList.add('active');
+    }
+</script>
+
+</body>
+</html>
