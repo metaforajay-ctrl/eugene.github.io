@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vibe Runner 2077 | Engine</title>
+    <link rel="stylesheet" href="https://pyscript.net" />
+    <script type="module" src="https://pyscript.net"></script>
+    <style>
+        body { background: #000; color: #f00; font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+        #screen { background: #050505; border: 2px solid #300; padding: 15px; font-size: 18px; line-height: 18px; letter-spacing: 2px; white-space: pre; box-shadow: 0 0 20px #500; }
+        .ui { margin-top: 15px; font-weight: bold; letter-spacing: 2px; }
+        .controls { display: grid; grid-template-columns: repeat(3, 70px); gap: 10px; margin-top: 20px; }
+        .btn { width: 70px; height: 70px; background: #111; border: 2px solid #f00; color: #f00; display: flex; align-items: center; justify-content: center; font-size: 30px; border-radius: 10px; user-select: none; -webkit-tap-highlight-color: transparent; }
+        .btn:active { background: #f00; color: #000; }
+    </style>
+</head>
+<body>
+
+    <div class="ui" id="stats">HP: 100 | LVL: 1 | SCORE: 0</div>
+    <div id="screen">Инициализация нейросети...</div>
+
+    <div class="controls">
+        <div></div><div class="btn" id="up">↑</div><div></div>
+        <div class="btn" id="left">←</div><div class="btn" id="down">↓</div><div class="btn" id="right">→</div>
+    </div>
+
+    <script type="py">
+        from pyscript import document
+        import random
+
+        # Конфигурация Black Legion
+        W, H = 20, 10
+        player = [2, 2]
+        enemies = [[10, 5], [15, 8], [5, 7]]
+        walls = []
+        score = 0
+        hp = 100
+        lvl = 1
+
+        # Генерация стен (лабиринт)
+        for _ in range(25):
+            walls.append([random.randint(1, W-2), random.randint(1, H-2)])
+
+        def render():
+            global hp, game_over
+            if hp <= 0:
+                document.getElementById("screen").innerText = "💀 СИСТЕМА УНИЧТОЖЕНА\nЮДЖИН ПОВЕРЖЕН\n\nОБНОВИ СТРАНИЦУ"
+                return
+
+            view = ""
+            for y in range(H):
+                for x in range(W):
+                    if [x, y] == player:
+                        view += "👑" # Юджин
+                    elif [x, y] in enemies:
+                        view += "👾" # Баг (Враг)
+                    elif [x, y] in walls:
+                        view += "█" # Преграда
+                    elif x == 0 or x == W-1 or y == 0 or y == H-1:
+                        view += "▓" # Граница
+                    else:
+                        view += "."
+                view += "\n"
+            
+            document.getElementById("screen").innerText = view
+            document.getElementById("stats").innerText = f"HP: {hp} | LVL: {lvl} | SCORE: {score}"
+
+        def move(dx, dy):
+            global score, hp, lvl
+            if hp <= 0: return
+
+            new_x = player[0] + dx
+            new_y = player[1] + dy
+
+            # Логика столкновений
+            if [new_x, new_y] in walls: return
+            if new_x <= 0 or new_x >= W-1 or new_y <= 0 or new_y >= H-1: return
+
+            player[0] = new_x
+            player[1] = new_y
+
+            # Битва с багами
+            for e in enemies:
+                if player == e:
+                    score += 50
+                    hp -= 10
+                    enemies.remove(e)
+                    enemies.append([random.randint(1, W-2), random.randint(1, H-2)])
+                    if score % 200 == 0: lvl += 1
+            
+            render()
+
+        # Кнопки для мобилок
+        document.getElementById("up").onclick = lambda _: move(0, -1)
+        document.getElementById("down").onclick = lambda _: move(0, 1)
+        document.getElementById("left").onclick = lambda _: move(-1, 0)
+        document.getElementById("right").onclick = lambda _: move(1, 0)
+
+        render()
+    </script>
+</body>
+</html>
